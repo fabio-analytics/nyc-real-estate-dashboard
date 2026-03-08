@@ -2,11 +2,16 @@ from dash import html, dcc
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import pandas as pd
-import numpy as np # Adicionado para evitar erro no np.linspace
+import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
 from app import app
+
+# =======================================================
+# O SEGREDO PRO RENDER: Declarar o server aqui no index!
+# =======================================================
+server = app.server
 
 # Componentes
 from _map import *
@@ -16,7 +21,7 @@ from _histogram import *
 
 # =======================================
 # Data Ingestion 
-# =================================================================
+# =======================================
 df_data = pd.read_csv("dataset/cleaned_data.csv", index_col=0)
 
 mean_lat = df_data["LATITUDE"].mean()
@@ -33,6 +38,7 @@ df_data.loc[df_data["SALE PRICE"] < 100000, "SALE PRICE"] = 100000
 
 # ================================
 # Template
+# ================================
 app.layout = dbc.Container(
         children=[
                 dbc.Row([
@@ -51,6 +57,7 @@ app.layout = dbc.Container(
 
 # ========================================================
 # Callbacks 
+# ========================================================
 @app.callback([Output('hist-graph', 'figure'), Output('map-graph', 'figure')],
             [Input('location-dropdown', 'value'), 
             Input('slider-square-size', 'value'), 
@@ -107,4 +114,4 @@ def update_hist(location, square_size, color_map):
     return hist_fig, map_fig
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="8050")
+    app.run_server(host="0.0.0.0", port=8050, debug=False)
