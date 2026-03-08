@@ -1,9 +1,6 @@
-
-
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from app import app
-
 
 list_of_locations = {
     "All": 0,
@@ -18,19 +15,25 @@ slider_size = [100, 500, 1000, 10000, 10000000]
 
 controllers = dbc.Row([
                 dcc.Store(id='store-global'),
-                html.Img(id="logo", src=app.get_asset_url("logo_dark.png"), style={'width':'50%'}),
-                html.H3("Vendas de imóveis - NYC", style={"margin-top": "30px"}),
+                
+                # AQUI ESTÁ A IMAGEM DE VOLTA! Puxando o arquivo logo_vision.png da pasta assets
+                html.Img(id="logo", src=app.get_asset_url("logo_vision.png"), style={'width':'100%', 'margin-bottom': '15px'}),
+                
+                # Textos da Vision Pró Data
+                html.H3("Análise Imobiliária - NYC", style={"margin-top": "20px"}),
+                html.P("Desenvolvido por Vision Pró Data", style={"font-weight": "bold", "color": "#e08b1b"}), 
                 html.P(
-                """Utilize este dashboard para analisar vendas ocorridas na 
-                cidade de New York no período de 1 ano. """
+                """Explore a distribuição e precificação de imóveis em Nova York utilizando dados históricos. Filtre por região e tamanho para insights detalhados."""
                 ),
 
-                html.H4("""Borough""", style={"margin-top": "50px", "margin-bottom": "50px"}),
+                html.H4("""Borough""", style={"margin-top": "40px", "margin-bottom": "20px"}),
                 dcc.Dropdown(
                     id="location-dropdown",
                     options=[{"label": i, "value": j} for i, j in list_of_locations.items()],
                     value=0,
-                    placeholder="Select a borought"),
+                    placeholder="Selecione a região",
+                    style={"color": "#000000"} 
+                ),
 
                 html.P("""Metragem (m2)""", style={"margin-top": "20px"}),
 
@@ -41,17 +44,12 @@ controllers = dbc.Row([
                 
                 dcc.Dropdown(
                     options=[
-                        {'label': 'YEAR BUILT', 'value': 'YEAR BUILT'},
-                        {'label': 'TOTAL UNITS', 'value': 'TOTAL UNITS'},
-                        {'label': 'SALE PRICE', 'value': 'SALE PRICE'},
+                        {'label': 'Ano de Construção', 'value': 'YEAR BUILT'},
+                        {'label': 'Total de Unidades', 'value': 'TOTAL UNITS'},
+                        {'label': 'Preço de Venda', 'value': 'SALE PRICE'},
                     ],
                     value='SALE PRICE',
-                    id="dropdown-color")
+                    id="dropdown-color",
+                    style={"color": "#000000"}
+                )
     ])
-
-    
-
-
-
-
-
